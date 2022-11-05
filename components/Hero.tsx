@@ -1,14 +1,19 @@
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import React from 'react'
 import { Cursor, useTypewriter } from 'react-simple-typewriter'
+import { urlFor } from '../sanity'
+import { PageInfo } from '../typings'
 import BackgroundCircles from './BackgroundCircles'
 
-type Props = {}
+type Props = {
+    pageInfo: PageInfo
+}
 
-const Hero = (props: Props) => {
+const Hero = ({ pageInfo }: Props) => {
     const [text, count] = useTypewriter({
         words: [
-            "Hi, The Name's Nurudeen Adewale",
+            `Hi, The Name's ${pageInfo.name}`,
             "Guy-who-loves-Coffee.tsx",
             "<ButLovesToCodeMore />"
         ],
@@ -18,9 +23,9 @@ const Hero = (props: Props) => {
   return (
     <div className="h-screen flex flex-col space-y-8 items-center justify-center text-center overflow-hidden">
         <BackgroundCircles />
-        <img className="relative rounded-full h-32 w-32 mx-auto object-cover" src="https://avatars.githubusercontent.com/u/35535871?s=400&u=f37147801d9422aa533f66dcb655b62b349fcd05&v=4" alt="Logo" />
+        <motion.img className="relative rounded-full h-32 w-32 mx-auto object-cover" src={urlFor(pageInfo?.heroImage).url()} alt="Logo" />
         <div className="z-20">
-            <h2 className="text-sm uppercase text-gray-500 pb-2 tracking-[15px]">Software Engineer</h2>
+            <h2 className="text-sm uppercase text-gray-500 pb-2 tracking-[15px]">{pageInfo?.role}</h2>
             <h1 className="text-5xl lg:text-6xl font-semibold px-10">
                 <span className="mr-3">{text}</span>
                 <Cursor cursorColor="#F7AB0A" />

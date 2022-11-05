@@ -1,25 +1,51 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Project } from "../typings";
+import { urlFor } from "../sanity";
 
-type Props = {};
+type Props = {
+  projects: Project[];
+};
 
-function Projects({}: Props) {
-  const projects = [1, 2, 3, 4, 5];
+function Projects({ projects }: Props) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="flex flex-col relative h-screen text-left overflow-hidden md:flex-row max-w-full px-10 justify-evenly mx-auto items-center"
+      className="flex relative h-screen text-left overflow-hidden md:flex-row max-w-full px-10 justify-evenly mx-auto items-center"
     >
-      <h3 className="absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
-        Projects
-      </h3>
+      <div className="flex flex-col justify-center items-center">
+        <h3 className="top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
+          P
+        </h3>
+        <h3 className="top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
+          r
+        </h3>
+        <h3 className="top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
+          o
+        </h3>
+        <h3 className="top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
+          j
+        </h3>
+        <h3 className="top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
+          e
+        </h3>
+        <h3 className="top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
+          c
+        </h3>
+        <h3 className="top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
+          t
+        </h3>
+        <h3 className="top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
+          s
+        </h3>
+      </div>
 
-      <div className="relative w-full flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20">
-        {projects.map((project, index) => (
+      <div className="relative w-full flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80">
+        {projects?.map((project, index) => (
           <div
-            key={project}
+            key={project?._id}
             className="w-screen flex-shrink-0 snap-center flex flex-col space-y-5 items-center justify-center p-20 md:p-44 h-screen"
           >
             <motion.img
@@ -27,7 +53,7 @@ function Projects({}: Props) {
               transition={{ duration: 1.2 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              src="https://miro.medium.com/max/1400/1*lps6E7zWrY7-jdclgq_Lig.jpeg"
+              src={urlFor(project?.image).url()}
               alt=""
             />
 
@@ -36,15 +62,22 @@ function Projects({}: Props) {
                 <span className="underline decoration-[#F7AB0A]/50">
                   Case Study {index + 1} of {projects.length}:
                 </span>{" "}
-                UPS Clone
+                {project?.title}
               </h4>
+
+              <div className="flex items-center space-x-2 justify-center">
+                {project?.technologies.map((technology) => (
+                  <motion.img
+                    className="w-10 h-10"
+                    key={technology?._id}
+                    src={urlFor(technology?.image).url()}
+                    alt=""
+                  />
+                ))}
+              </div>
+
               <p className="text-lg text-center md:text-left">
-                This is a blog platform built with NextJs, GraphCMS and
-                Tailwind. It accepts multiple Authors to post on the platform.
-                The blog has Home Page, Category Page and Post Page. It also
-                contains different sections like comments, featured posts
-                widget, related posts widget and category post widget. You can
-                also view posts based on categories
+                {project?.summary}
               </p>
             </div>
           </div>
